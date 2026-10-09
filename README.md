@@ -9,11 +9,11 @@ This package is maintained by FlashData. It implements LangChain's `BaseTool` an
 
 ## Installation
 
-Requires Python 3.10 or newer (below Python 4). The first PyPI release is pending;
-install the public source while publication is being completed:
+Requires Python 3.10 or newer (below Python 4). Install from
+[PyPI](https://pypi.org/project/langchain-flashdata/):
 
 ```bash
-pip install 'git+https://github.com/flashdata-dev/langchain-flashdata.git'
+pip install -U langchain-flashdata
 ```
 
 Create an API key in the [FlashData console](https://flashdata.dev), enable the
@@ -80,7 +80,7 @@ asyncio.run(main())
 
 ## Use with a LangChain / LangGraph agent
 
-The [research example](examples/research_agent.py) uses `create_agent`, which runs
+The [research example](https://github.com/flashdata-dev/langchain-flashdata/blob/main/examples/research_agent.py) uses `create_agent`, which runs
 on LangGraph. The model chooses tools and arguments from the question. A tool call
 limit bounds the number of queries; it does not set a credit or dollar limit.
 
@@ -115,7 +115,7 @@ tools = FlashDataToolkit().get_tools()
 tool_node = ToolNode(tools, handle_tool_errors=False)
 ```
 
-See [examples/README.md](examples/README.md) for direct tool calls, transcript
+See [the examples guide](https://github.com/flashdata-dev/langchain-flashdata/blob/main/examples/README.md) for direct tool calls, transcript
 research, and the hosted MCP alternative.
 
 ## Output and errors
@@ -149,7 +149,7 @@ are not used.
 You can also connect LangChain to the existing hosted MCP endpoint at
 `https://data.flashdata.dev/mcp` using the `X-API-Key` header. The native Python
 tools above cover four query operations; the MCP catalog also contains account
-and job operations and varies with key scopes. See [hosted_mcp.py](examples/hosted_mcp.py).
+and job operations and varies with key scopes. See [hosted_mcp.py](https://github.com/flashdata-dev/langchain-flashdata/blob/main/examples/hosted_mcp.py).
 The example uses the current `langchain[mcp]` API, which LangChain labels beta.
 
 ## Development
@@ -172,6 +172,7 @@ explicitly with `FLASHDATA_API_KEY` configured:
 FLASHDATA_RUN_LIVE=1 uv run --extra examples pytest tests/integration_tests -q
 ```
 
-Release instructions: [RELEASING.md](RELEASING.md).
-Data handling: [PRIVACY.md](PRIVACY.md). License: [MIT](LICENSE).
+Release instructions: [RELEASING.md](https://github.com/flashdata-dev/langchain-flashdata/blob/main/RELEASING.md).
+Data handling: [PRIVACY.md](https://github.com/flashdata-dev/langchain-flashdata/blob/main/PRIVACY.md).
+License: [MIT](https://github.com/flashdata-dev/langchain-flashdata/blob/main/LICENSE).
 Support: [support@flashdata.dev](mailto:support@flashdata.dev).

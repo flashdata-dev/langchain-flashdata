@@ -1,7 +1,7 @@
 # Prepared LangChain listing form
 
-Submission is pending PyPI publication. Copy the sections below into the
-official Integration listing form only after the package is installable from PyPI.
+The package is published on PyPI. Copy the sections below into the official
+Integration listing form after verifying installation of the current release.
 
 ### Display or class name
 
@@ -41,4 +41,4 @@ _No response_
 
 ### Confirmations
 
-- [ ] The package is already published on PyPI and/or npm.
+- [x] The package is already published on PyPI and/or npm.

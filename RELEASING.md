@@ -1,8 +1,9 @@
 # Publishing langchain-flashdata
 
 Source publication, PyPI publication, a LangChain listing request, and acceptance
-into the official directory are separate milestones. Version 0.1.0 is prepared;
-the initial PyPI publication still requires a PyPI publishing identity.
+into the official directory are separate milestones. PyPI publication uses the
+configured GitHub Trusted Publisher. Version 0.1.0 was first published on
+2026-10-09; version 0.1.1 updates the published installation documentation.
 
 ## Verify the release
 
@@ -20,12 +21,13 @@ do not repeat them merely to recreate a release artifact.
 
 ## PyPI Trusted Publisher
 
-Create or use a FlashData-controlled [PyPI account](https://pypi.org/account/register/),
-verify its email and enable two-factor authentication. Keep passwords, recovery
-codes and one-time codes with the account owner.
+The publisher is already configured under the FlashData-controlled PyPI account
+`flashdata-dev`, with verified email and two-factor authentication. Keep
+passwords, recovery codes and one-time codes with the account owner.
 
-For the first publication, add a **pending publisher** at
-<https://pypi.org/manage/account/publishing/> with these exact values:
+The first publication used a pending publisher, now bound to the created project.
+Manage it at <https://pypi.org/manage/project/langchain-flashdata/settings/publishing/>.
+Do not create another pending publisher for this existing package. Its settings are:
 
 | Field | Value |
 | --- | --- |
@@ -35,21 +37,24 @@ For the first publication, add a **pending publisher** at
 | Workflow filename | `publish.yml` |
 | GitHub environment | `pypi` |
 
-Create the corresponding `pypi` GitHub environment and restrict release access as
-appropriate. The workflow uses GitHub OIDC, so no long-lived PyPI token is needed.
+The corresponding `pypi` GitHub environment exists. The workflow uses GitHub OIDC,
+so no long-lived PyPI token is needed.
 This publisher authorizes this repository/workflow to publish future releases of
 this package; it is not an npm or GitHub login.
 
-After the publisher exists, tag the verified main commit `v0.1.0`, push the tag,
+For each release, update the version in `pyproject.toml`, `uv.lock`, and the
+package user agent, then verify the release and merge its changes. Tag the
+verified main commit (for example `v0.1.1`), push the tag,
 and manually run **Publish to PyPI** with that tag selected. The workflow checks
 that the tag matches the package version, tests, builds, and publishes exactly the
 built wheel and source archive. It will not publish from a branch. Do not overwrite
 a released version or retry an uncertain publication without checking PyPI first.
 
 After success, verify <https://pypi.org/project/langchain-flashdata/> and install
-`langchain-flashdata==0.1.0` in a clean environment. Update README installation to
-the PyPI command, remove the pending publication note, and record the release
-date, workflow URL and artifact hashes in the GTM task.
+the exact released version in a clean environment. Record the release date,
+workflow URL and artifact hashes in the GTM task. Package descriptions on PyPI
+come from the built README: verify the installation command and absolute
+documentation links before building, because released metadata is immutable.
 
 ## LangChain official listing
 

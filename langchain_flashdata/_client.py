@@ -24,7 +24,7 @@ def _headers(api_key: SecretStr) -> dict[str, str]:
         "X-API-Key": api_key.get_secret_value(),
         "X-Request-Id": str(uuid4()),
         "Accept": "application/json",
-        "User-Agent": "langchain-flashdata/0.1.0",
+        "User-Agent": "langchain-flashdata/0.1.1",
     }
 
 

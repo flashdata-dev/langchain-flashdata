@@ -1,0 +1,51 @@
+name: Publish to PyPI
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pypi-publish
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.12'
+      - run: uv sync --frozen --extra examples
+      - name: Check release version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          uv run python - <<'PY'
+          import os, tomllib
+          from pathlib import Path
+          version = tomllib.loads(Path('pyproject.toml').read_text())['project']['version']
+          assert os.environ['RELEASE_TAG'] == f'v{version}', 'Tag and package version differ'
+          PY
+      - run: uv run --extra examples pytest --disable-socket --allow-unix-socket
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv build
+      - run: uv run twine check dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: distributions
+          path: dist/
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/langchain-flashdata/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: distributions
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1

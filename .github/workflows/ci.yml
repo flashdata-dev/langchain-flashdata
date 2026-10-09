@@ -1,0 +1,25 @@
+name: CI
+on:
+  push:
+    branches: [main, 'codex/**']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.10', '3.12', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+          enable-cache: true
+      - run: uv sync --frozen --extra examples
+      - run: uv run --extra examples pytest --disable-socket --allow-unix-socket
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv build
+      - run: uv run twine check dist/*

@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langchain-flashdata"
+version = "0.1.0"
+description = "FlashData Google Search and YouTube tools for LangChain and LangGraph"
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+license = "MIT"
+authors = [{name = "FlashData", email = "support@flashdata.dev"}]
+keywords = ["langchain", "langgraph", "flashdata", "google-search", "youtube", "agents"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Typing :: Typed",
+]
+dependencies = [
+  "langchain-core>=1.6.9,<2",
+  "httpx>=0.28.1,<1",
+  "pydantic>=2.7.4,<3",
+]
+
+[project.urls]
+Homepage = "https://flashdata.dev"
+Documentation = "https://github.com/flashdata-dev/langchain-flashdata#readme"
+Repository = "https://github.com/flashdata-dev/langchain-flashdata"
+Issues = "https://github.com/flashdata-dev/langchain-flashdata/issues"
+
+[project.optional-dependencies]
+examples = ["langchain>=1.4.4,<2", "langchain-openai>=1.7.0,<2"]
+mcp = ["langchain[mcp]>=1.4.4,<2"]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "langchain-tests==1.1.9", "ruff>=0.14,<1", "twine>=7,<8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["langchain_flashdata"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit_tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
